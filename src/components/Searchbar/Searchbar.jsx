@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FcSearch } from 'react-icons/fc';
 import {
@@ -9,16 +9,14 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-export class Searchbar extends Component {
-  state = {
-    query: '',
-  };
-  handleChange = e => {
-    this.setState({ query: e.target.value });
-  };
-  handleSubmit = e => {
+export const Searchbar = ({onSubmit}) => {
+  const [query, setQuery] = useState('');
+
+  const handleChange = e => setQuery(e.target.value);
+
+  const  handleSubmit = e => {
     e.preventDefault();
-    if (this.state.query.trim() === '') {
+    if (query.trim() === '') {
       return toast('Please enter a query!', {
         icon: '👏',
         style: {
@@ -28,28 +26,72 @@ export class Searchbar extends Component {
         },
       });
     }
-    this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
+    onSubmit(query);
+    setQuery('');
   };
-  render() {
-    return (
-      <Header>
-        <SearchForm onSubmit={this.handleSubmit}>
-          <SearchFormButton type="submit">
-            <FcSearch size="30" />
-            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
-          </SearchFormButton>
 
-          <SearchFormInput
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value={this.state.query}
-            onChange={this.handleChange}
-          />
-        </SearchForm>
-      </Header>
-    );
-  }
-}
+  return (
+    <Header>
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchFormButton type="submit">
+          <FcSearch size="30" />
+          <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+        </SearchFormButton>
+
+        <SearchFormInput
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={query}
+          onChange={handleChange}
+        />
+      </SearchForm>
+    </Header>
+  );
+};
+
+// export class Searchbar extends Component {
+//   state = {
+//     query: '',
+//   };
+//   handleChange = e => {
+//     this.setState({ query: e.target.value });
+//   };
+//   handleSubmit = e => {
+//     e.preventDefault();
+//     if (this.state.query.trim() === '') {
+//       return toast('Please enter a query!', {
+//         icon: '👏',
+//         style: {
+//           borderRadius: '10px',
+//           background: '#333',
+//           color: '#fff',
+//         },
+//       });
+//     }
+//     this.props.onSubmit(this.state.query);
+//     this.setState({ query: '' });
+//   };
+//   render() {
+//     return (
+//       <Header>
+//         <SearchForm onSubmit={this.handleSubmit}>
+//           <SearchFormButton type="submit">
+//             <FcSearch size="30" />
+//             <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+//           </SearchFormButton>
+
+//           <SearchFormInput
+//             type="text"
+//             autoComplete="off"
+//             autoFocus
+//             placeholder="Search images and photos"
+//             value={this.state.query}
+//             onChange={this.handleChange}
+//           />
+//         </SearchForm>
+//       </Header>
+//     );
+//   }
+// }

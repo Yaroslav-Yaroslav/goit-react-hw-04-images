@@ -14,3 +14,6 @@ export const ImageGallery = styled.img`
     cursor: zoom-in;
   }
 `;
+export const ImageModal = styled.img`
+  max-height: calc(100vh - 24px);
+`;
