@@ -35,18 +35,25 @@ export const App = () => {
   }, [page, query]);
 
   let divToScroll = useRef();
-  const scrollToDiv = () => {
-    let dims = divToScroll.current.getBoundingClientRect();
-    console.log('dims:', dims);
+  // const scrollToDiv = () => {
+  //   let dims = divToScroll.current.getBoundingClientRect();
+  //   console.log('dims.top:', dims.top);
 
-    window.scrollTo({
-      top: dims.top,
+  //   window.scrollTo({
+  //     top: dims.top,
+  //     behavior: 'smooth',
+  //   });
+  // };
+  // useEffect(() => {
+  //   scrollToDiv();
+  // }, [images]);
+  useEffect(() => {
+    if (page === 1) return;
+    window.scrollBy({
+      top: 560,
       behavior: 'smooth',
     });
-  };
-  useEffect(() => {
-    scrollToDiv();
-  }, [images]);
+  }, [images, page]);
 
   const onClickBtn = () => setPage(prevPage => prevPage + 1);
   const handleFormSubmit = query => {
